@@ -15,13 +15,16 @@ const Detailspage = () => {
     setCountry(countries[0].countries);
   }, []);
 
+  // if (country.length > 0) {
+  //   console.log(country);
+  // }
+
   useEffect(() => {
-    if(country.length > 0) {
-      country.forEach((local) => {
-        dispatch(fetchCountryDetails(local));
-      })
-    }
-  }, [country])
+    country.forEach((countryName) => {
+      dispatch(fetchCountryDetails(countryName));
+    });
+  }, [dispatch, country]);
+  
 
   return (
     <div>
@@ -30,6 +33,15 @@ const Detailspage = () => {
           <li key={param.country_name}>{country.continent} {country.cases.toLocaleString()}</li>
         ))}
       </ul>
+      {Object.keys(countryData).map((countryName) => {
+      const country = countryData[countryName];
+      return (
+          <div key={countryName}>
+            <h3>{countryName}</h3>
+            <p>Cases: {country.cases}</p>
+          </div>
+        );
+      })}
     </div>
   )
 }
