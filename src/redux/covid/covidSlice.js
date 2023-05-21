@@ -4,7 +4,7 @@ import axios from "axios";
 const initialState = {
   covidCases: 0,
   countries: [],
-  countryDetals: [],
+  countryDetails: [],
   isLoading: false,
   error: '',
 }
@@ -52,7 +52,7 @@ const covidSlice = createSlice({
       state.countries = action.payload;
     })
     builder.addCase(fetchCountryDetails.fulfilled, (state, action) => {
-      state.countryDetals = action.payload;
+      state.countryDetails = action.payload;
     })
   }
 })
