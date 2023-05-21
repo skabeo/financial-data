@@ -11,7 +11,6 @@ const Homepage = () => {
   useEffect(() => {
     dispatch(fetchAllCases());
     dispatch(fetchAllCountries());
-    dispatch(fetchCountryDetails('ghana'));
   }, [])
 
   useEffect(() => {
