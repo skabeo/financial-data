@@ -4,7 +4,7 @@ import axios from "axios";
 const initialState = {
   covidCases: 0,
   countries: [],
-  countryDetails: [],
+  countryDetails: {},
   isLoading: false,
   error: '',
 }
@@ -36,7 +36,7 @@ export const fetchCountryDetails = createAsyncThunk('fetch/countryDetails', asyn
     }
     return countryData;
   } catch(error) {
-    return error;
+    throw error;
   }
 })
 
@@ -52,8 +52,19 @@ const covidSlice = createSlice({
       state.countries = action.payload;
     })
     builder.addCase(fetchCountryDetails.fulfilled, (state, action) => {
-      state.countryDetails = action.payload;
+      const { name, cases } = action.payload;
+      state.countryDetails[name] = {
+        name,
+        cases,
+        error: null,
+      };
     })
+    builder.addCase(fetchCountryDetails.rejected, (state, action) => {
+      const { name } = action.meta.arg;
+      state.countryDetails[name] = {
+        error: action.error.message,
+      };
+    });
   }
 })
 
